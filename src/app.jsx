@@ -4,6 +4,8 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 import CategoryDetailsPage from "./pages/category-details-page";
 import MainPage from "./pages/main-page";
+import LoginPage from './pages/login-page/index';
+import RegisterPage from './pages/register-page/index';
 
 function App() {
   return (
@@ -15,6 +17,10 @@ function App() {
             <Route index element={<MainPage />} />
             <Route path='category' >
              <Route path=':slug' element={<CategoryDetailsPage />} />
+            </Route>
+            <Route path='auth'>
+              <Route path = 'login' element={<LoginPage />} />
+              <Route path = 'register' element={<RegisterPage />} />
             </Route>
           </Routes>
         </main>

@@ -1,5 +1,5 @@
 
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 const initialValue = {};
 
@@ -7,9 +7,13 @@ export const AuthTokenContext = createContext(initialValue)
 
 
 export default function AuthTokenContextProvider(props){
+    const [token, setToken] = useState(null)
+
     const ContextValue = {
-        // fill this area
+        token,
+        setToken,
     }
+
     return (
     <AuthTokenContext.Provider value={ContextValue}>
         {props.children}

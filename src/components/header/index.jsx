@@ -30,20 +30,22 @@ export default function Header() {
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
           <Link
             to="category/test"
-            className="me-3 py-2 text-dark text-decoration-none"
+            className="me-3 py-2 btn btn-primary text-decoration-none"
           >
             Kategory Detay
           </Link>
-          <Link
-            to="blogs"
-            className="me-3 py-2 text-dark text-decoration-none"
-          >
+          <Link to="blogs" className="me-3 py-2 btn btn-primary text-decoration-none">
             Blogs
           </Link>
-          <Link className="me-3 py-2 text-dark text-decoration-none">
-            Support
+          <Link 
+          to='auth/login'
+          className="me-3 py-2 btn btn-primary  text-decoration-none">
+          Giris Yap
           </Link>
-          <Link className="py-2 text-dark text-decoration-none">Pricing</Link>
+          <Link 
+          to = 'auth/register'
+          className="py-2 btn btn-primary text-decoration-none">
+            Kayit Ol</Link>
         </nav>
       </div>
     </header>

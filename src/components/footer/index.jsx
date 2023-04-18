@@ -1,6 +1,12 @@
+import { useContext } from 'react';
 import Logo from './logo.svg'
+import { AuthTokenContext } from './../../context/auth-token-context-provider/index';
 
 export default function Footer() {
+
+ const authTokenValue =  useContext(AuthTokenContext);
+ console.log(authTokenValue);
+
   return (
     <footer className="pt-4 my-md-5 pt-md-5 border-top">
       <div className="row">
@@ -13,6 +19,7 @@ export default function Footer() {
             height="19"
           />
           <small className="d-block mb-3 text-muted">&copy; 2017–2022</small>
+          <strong className='text-danger'>Token:{authTokenValue.token}</strong>
         </div>
         <div className="col-6 col-md">
           <h5>Features</h5>
