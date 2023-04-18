@@ -1,7 +1,8 @@
 
 export default function CategoryDetailsPage(){
-    return 
+    return (
     <>
     Burasi kategori detay sayfasi
     </>
+    )
 }

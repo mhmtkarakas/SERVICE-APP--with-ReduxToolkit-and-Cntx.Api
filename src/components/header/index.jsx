@@ -4,8 +4,8 @@ export default function Header() {
   return (
     <header>
       <div className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="d-flex align-items-center text-dark text-decoration-none"
         >
           <svg
@@ -25,21 +25,25 @@ export default function Header() {
             ></path>
           </svg>
           <span className="fs-4">Find Service</span>
-        </a>
+        </Link>
 
         <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <Link to = "category/test" className="me-3 py-2 text-dark text-decoration-none" >
+          <Link
+            to="category/test"
+            className="me-3 py-2 text-dark text-decoration-none"
+          >
             Kategory Detay
           </Link>
-          <Link to = '/blogs' className="me-3 py-2 text-dark text-decoration-none" >
+          <Link
+            to="blogs"
+            className="me-3 py-2 text-dark text-decoration-none"
+          >
             Blogs
           </Link>
-          <Link className="me-3 py-2 text-dark text-decoration-none" >
+          <Link className="me-3 py-2 text-dark text-decoration-none">
             Support
           </Link>
-          <Link className="py-2 text-dark text-decoration-none" >
-            Pricing
-          </Link>
+          <Link className="py-2 text-dark text-decoration-none">Pricing</Link>
         </nav>
       </div>
     </header>

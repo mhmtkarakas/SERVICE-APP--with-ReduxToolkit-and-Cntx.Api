@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/footer";
 import Header from "./components/header";
@@ -13,8 +13,8 @@ function App() {
         <main>
           <Routes>
             <Route index element={<MainPage />} />
-            <Route path="category">
-              <Route path=":slug" element={<CategoryDetailsPage />} />
+            <Route path='category' >
+             <Route path=':slug' element={<CategoryDetailsPage />} />
             </Route>
           </Routes>
         </main>
