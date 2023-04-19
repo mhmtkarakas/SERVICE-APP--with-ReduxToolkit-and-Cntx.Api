@@ -9,12 +9,12 @@ import AuthTokenContextProvider from "./context/auth-token-context-provider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeContextProvider>
-        <AuthTokenContextProvider>
+    <ThemeContextProvider>
+      <AuthTokenContextProvider>
+        <Provider store={store}>
           <App />
-        </AuthTokenContextProvider>
-      </ThemeContextProvider>
-    </Provider>
+        </Provider>
+      </AuthTokenContextProvider>
+    </ThemeContextProvider>
   </React.StrictMode>
 );
