@@ -1,10 +1,12 @@
 import { Col, Row, Form, Button } from "react-bootstrap";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import useApi from './../../hooks/useApi';
 import { toast } from 'react-toastify';
+import { AuthTokenContext } from './../../context/auth-token-context-provider/index';
 
 export default function LoginPage() {
   const api = useApi();
+  const authTokenContextValue = useContext(AuthTokenContext)
   /**Bir inputtan data almak icin asagidaki yontemler kullanilabilir.
    * Amatorden profesyonele dogru siralanmistir.
    * 1-useState hooku kullanilarak yapilan
@@ -40,6 +42,10 @@ export default function LoginPage() {
     api.post('auth/login',formJson)
     .then((response)=>{
       console.log('api response',response);
+      
+      authTokenContextValue.setToken(response.data.data.token)
+      
+
       toast.success('Giris Basarili', {
         position: "top-right",
         autoClose: 5000,
