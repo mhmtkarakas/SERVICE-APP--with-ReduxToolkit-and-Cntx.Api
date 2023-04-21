@@ -3,10 +3,13 @@ import { useContext, useRef, useState } from "react";
 import useApi from './../../hooks/useApi';
 import { toast } from 'react-toastify';
 import { AuthTokenContext } from './../../context/auth-token-context-provider/index';
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../redux/userSlice";
 
 export default function LoginPage() {
   const api = useApi();
   const authTokenContextValue = useContext(AuthTokenContext)
+  const dispatch = useDispatch();
   /**Bir inputtan data almak icin asagidaki yontemler kullanilabilir.
    * Amatorden profesyonele dogru siralanmistir.
    * 1-useState hooku kullanilarak yapilan
@@ -19,6 +22,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
  // console.log(email, password);
 
   // 2-useRef hook yontemi
@@ -38,13 +42,16 @@ export default function LoginPage() {
     const formData = new FormData(event.target);
     const formJson = Object.fromEntries(formData.entries());
 
-    console.log("formJson datasi", formJson);
+    console.log(">>formJson datasi", formJson);
     api.post('auth/login',formJson)
     .then((response)=>{
-      console.log('api response',response);
+      console.log('>>api response',response);
       
-      authTokenContextValue.setToken(response.data.data.token)
-      
+      // Api den cevap geldiginde token bilgisini context e gonder.
+      //kullanici bilgisini de state e gonder
+      authTokenContextValue.setToken(response.data.data.token);
+  
+      dispatch(setUserData(response.data.data.userData))
 
       toast.success('Giris Basarili', {
         position: "top-right",

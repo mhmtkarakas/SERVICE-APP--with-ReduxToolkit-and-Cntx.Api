@@ -1,6 +1,25 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Button,Badge, FormLabel} from "react-bootstrap";
+import { useContext } from "react";
+import { AuthTokenContext } from './../../context/auth-token-context-provider/index';
+import { removeUserData } from "../../redux/userSlice";
 
 export default function Header() {
+  const userState = useSelector((state) => state.userState);
+  const authTokenContextValue = useContext(AuthTokenContext);
+  const dispatch = useDispatch()
+  // cikis yapmak istedigimizde iki yontemle cikis yapabiliriz. Birinci yontem token ve user state'ini
+  // silmek yani hizli cikis. Ikinci yontem ise soru sorarak cikmak yani kullaniciya 'cikmak istediginize emin misisniz'
+  // seklinde soru sorariz  ve "evet" butonuna tiklanirsa cikis yapariz.
+  const onLogoutBtnClick = () =>{
+
+  localStorage.removeItem('token');
+  authTokenContextValue.setToken(null);
+  dispatch(removeUserData());
+
+  }
+
   return (
     <header>
       <div className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
@@ -32,20 +51,47 @@ export default function Header() {
             to="category/test"
             className="me-3 py-2 btn btn-primary text-decoration-none"
           >
+            <i className="fa-solid fa-circle-info me-2"></i>
             Kategory Detay
           </Link>
-          <Link to="blogs" className="me-3 py-2 btn btn-primary text-decoration-none">
+          <Link
+            to="blogs"
+            className="me-3 py-2 btn btn-primary text-decoration-none"
+          >
+            <i className="fa-solid fa-blog me-2" ></i>
             Blogs
           </Link>
-          <Link 
-          to='auth/login'
-          className="me-3 py-2 btn btn-primary  text-decoration-none">
-          Giris Yap
-          </Link>
-          <Link 
-          to = 'auth/register'
-          className="py-2 btn btn-primary text-decoration-none">
-            Kayit Ol</Link>
+
+          {userState.userData === null ? (
+            <>
+              <Link
+                to="auth/login"
+                className="me-3 py-2 btn btn-primary  text-decoration-none"
+              >
+                Giris Yap
+              </Link>
+              <Link
+                to="auth/register"
+                className="py-2 btn btn-primary text-decoration-none"
+              >
+                Kayit Ol
+              </Link>
+            </>
+          ) : (
+            <>
+            <Badge  className="p-3 bg-danger me-3">
+            <i className="fa-solid fa-user me-2"></i>
+            
+            {userState.userData.fullname}
+            </Badge>
+            <Button 
+             onClick={onLogoutBtnClick}
+            variant="success ">
+            <i className="fa-solid fa-right-from-bracket me-2"></i>
+              Cikis Yap
+            </Button>
+            </>
+          )}
         </nav>
       </div>
     </header>
