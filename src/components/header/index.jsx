@@ -1,24 +1,61 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button,Badge, FormLabel} from "react-bootstrap";
+import { Button, Badge, FormLabel } from "react-bootstrap";
 import { useContext } from "react";
-import { AuthTokenContext } from './../../context/auth-token-context-provider/index';
+import { AuthTokenContext } from "./../../context/auth-token-context-provider/index";
 import { removeUserData } from "../../redux/userSlice";
+import useSwal from "../../hooks/useSwal";
 
 export default function Header() {
   const userState = useSelector((state) => state.userState);
   const authTokenContextValue = useContext(AuthTokenContext);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const swal = useSwal();
+
+  const logoutUser = () => {
+    localStorage.removeItem("token");
+    authTokenContextValue.setToken(null);
+    dispatch(removeUserData());
+  };
   // cikis yapmak istedigimizde iki yontemle cikis yapabiliriz. Birinci yontem token ve user state'ini
   // silmek yani hizli cikis. Ikinci yontem ise soru sorarak cikmak yani kullaniciya 'cikmak istediginize emin misisniz'
   // seklinde soru sorariz  ve "evet" butonuna tiklanirsa cikis yapariz.
-  const onLogoutBtnClick = () =>{
+  const onLogoutBtnClick = () => {
+    //logoutUser();
 
-  localStorage.removeItem('token');
-  authTokenContextValue.setToken(null);
-  dispatch(removeUserData());
+    // ikinci yontem: soru sorduktan sonra cikis yapalim
+    // bu yontem de kendi icerisinde ikiye ayrili. Birincisi javascriptin 'confirm' yontemi
+    // Digeri de "sweatalert" kutuphanesi kullanmak
+    //2-1 confirm( yontemi)
+    // const result = confirm("cikis yapmak istediginize emin misisniz?");
+    // console.log(">>confirm result", result);
+    // if (result === true) {
+    //  logoutUser();
+    // }
 
-  }
+    // 2.2: swaet alert yontemi
+    // sweatalert islemi asenkron bir islemdir. Bu nedenle then ve catch kullanilir/
+    // title a jsx elemanlari yazilabilir
+    swal
+      .fire({
+        title: (
+          <p>
+            <h2>Emin misiniz?</h2>
+            <div className="alert alert-danger" role="alert">
+              Cikis Yapmak Istiyor musunuz???
+            </div>
+          </p>
+        ),
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          logoutUser();
+        } else {
+          // Burada bir sey yapmaya gerek yok
+        }
+      });
+  };
 
   return (
     <header>
@@ -58,7 +95,7 @@ export default function Header() {
             to="blogs"
             className="me-3 py-2 btn btn-primary text-decoration-none"
           >
-            <i className="fa-solid fa-blog me-2" ></i>
+            <i className="fa-solid fa-blog me-2"></i>
             Blogs
           </Link>
 
@@ -79,17 +116,15 @@ export default function Header() {
             </>
           ) : (
             <>
-            <Badge  className="p-3 bg-danger me-3">
-            <i className="fa-solid fa-user me-2"></i>
-            
-            {userState.userData.fullname}
-            </Badge>
-            <Button 
-             onClick={onLogoutBtnClick}
-            variant="success ">
-            <i className="fa-solid fa-right-from-bracket me-2"></i>
-              Cikis Yap
-            </Button>
+              <Badge className="p-3 bg-danger me-3">
+                <i className="fa-solid fa-user me-2"></i>
+
+                {userState.userData.fullname}
+              </Badge>
+              <Button onClick={onLogoutBtnClick} variant="success ">
+                <i className="fa-solid fa-right-from-bracket me-2"></i>
+                Cikis Yap
+              </Button>
             </>
           )}
         </nav>
