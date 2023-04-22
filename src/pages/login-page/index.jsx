@@ -5,11 +5,13 @@ import { toast } from 'react-toastify';
 import { AuthTokenContext } from './../../context/auth-token-context-provider/index';
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const api = useApi();
   const authTokenContextValue = useContext(AuthTokenContext)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   /**Bir inputtan data almak icin asagidaki yontemler kullanilabilir.
    * Amatorden profesyonele dogru siralanmistir.
    * 1-useState hooku kullanilarak yapilan
@@ -63,6 +65,11 @@ export default function LoginPage() {
         progress: undefined,
         theme: "colored",
         });
+        // Kullanici login olduktan sonra login ekraninda beklememesi gerekiyor.
+        //Yani anasayfaya yonlendirmemiz gerekiyor. Bunu yapmak icin iki yontem var.
+        // Birinci yontem document.location set etmek. Ama bu yontem onemli yan etkileri olan ve tercih edilmeyen yontemdir.
+        // ikinci yontem ise react-router-DOM kullanarak yonlendirme yapmaktir.
+        navigate('/');
     })
     .catch((err)=>{
       console.log('error',err);
