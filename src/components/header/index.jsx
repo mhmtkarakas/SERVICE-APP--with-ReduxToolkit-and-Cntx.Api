@@ -102,15 +102,18 @@ export default function Header() {
           {userState.userData === null ? (
             <>
               <Link
+                
                 to="auth/login"
                 className="me-3 py-2 btn btn-primary  text-decoration-none"
               >
+                <i class="fa-solid fa-right-to-bracket me-2"></i>
                 Giris Yap
               </Link>
               <Link
                 to="auth/register"
                 className="py-2 btn btn-primary text-decoration-none"
               >
+                <i class="fa-solid fa-registered me-2"></i>
                 Kayit Ol
               </Link>
             </>

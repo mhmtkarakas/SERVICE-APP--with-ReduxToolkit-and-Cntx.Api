@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
-import useApi from "./../../hooks/useApi";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useApi from "../../hooks/useApi";
 
 export default function CategoryDetailsPage() {
-  const api = useApi();
   const params = useParams();
+  const api = useApi();
   const [categoryDetails, setCategoryDetails] = useState(null);
   const [blogs, setBlogs] = useState(null);
   const [services, setServices] = useState(null);
@@ -18,7 +18,7 @@ export default function CategoryDetailsPage() {
         setServices(response.data.data.services);
       })
       .catch((err) => {
-        console.error(">>ERR", err);
+        console.error(">> ERR", err);
       });
   }, []);
 
@@ -29,11 +29,12 @@ export default function CategoryDetailsPage() {
       </>
     );
   }
+
   return (
     <>
       <h2 className="text-center">{categoryDetails.name}</h2>
       <p>{categoryDetails.description}</p>
-
+      Burası kategori detay sayfası
       <br />
       {params.slug}
     </>
